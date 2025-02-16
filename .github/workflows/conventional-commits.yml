@@ -1,0 +1,72 @@
+name: Conventional Commits & SemVer Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, edited]
+
+jobs:
+  check-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install commitlint
+        run: |
+          npm install -g @commitlint/config-conventional @commitlint/cli
+
+      - name: Validate PR title
+        id: validate_title
+        run: |
+          TITLE="${{ github.event.pull_request.title }}"
+          if [[ ! $TITLE =~ ^(feat|fix|chore|docs|style|refactor|perf|test|ci|build|revert)(\([a-zA-Z0-9_-]+\))?!?:\ .+ ]]; then
+            echo "❌ PR title does not follow Conventional Commit format. Closing PR..."
+            exit 1
+          fi
+
+      - name: Validate Commit Messages for SemVer Compliance
+        id: validate_commits
+        run: |
+          git fetch --depth=100
+          git log --pretty=format:%s origin/main..HEAD | npx commitlint
+          
+          while read line; do
+            if [[ "$line" =~ ^(feat|fix|chore|docs|style|refactor|perf|test|ci|build|revert)(\([a-zA-Z0-9_-]+\))?!?:\ .+ ]]; then
+              if [[ "$line" =~ BREAKING\ CHANGE ]]; then
+                echo "🚨 Commit message includes a breaking change, this should be a MAJOR version update."
+              elif [[ "$line" =~ ^feat ]]; then
+                echo "✅ This commit should result in a MINOR version bump."
+              elif [[ "$line" =~ ^fix ]]; then
+                echo "✅ This commit should result in a PATCH version bump."
+              fi
+            else
+              echo "❌ Commit does not follow Conventional Commit format or Semantic Versioning."
+              exit 1
+            fi
+          done < <(git log --pretty=format:%s origin/main..HEAD)
+
+      - name: Comment and Close PR if Invalid
+        if: failure()
+        run: |
+          gh pr comment ${{ github.event.pull_request.html_url }} --body "❌ PR does not follow Conventional Commit format or Semantic Versioning. Please update."
+          gh pr close ${{ github.event.pull_request.number }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Send Failure Email Notification
+        if: failure()
+        run: |
+          echo "Subject: PR Validation Failed" > email.txt
+          echo "" >> email.txt
+          echo "Your PR has been closed because it did not follow the Conventional Commit and Semantic Versioning rules." >> email.txt
+          echo "Please update your PR title or commit messages and try again." >> email.txt
+
+          sendemail -f "${{ secrets.SMTP_USER }}" \
+                    -t "recipient@example.com" \
+                    -u "PR Validation Failed" \
+                    -m "$(cat email.txt)" \
+                    -s "${{ secrets.SMTP_HOST }}:${{ secrets.SMTP_PORT }}" \
+                    -xu "${{ secrets.SMTP_USER }}" \
+                    -xp "${{ secrets.SMTP_PASS }}" \
+                    -o tls=yes
+

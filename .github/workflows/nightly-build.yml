@@ -1,0 +1,55 @@
+name: Nightly Build and Push
+
+on:
+  schedule:
+    - cron: "0 0 * * *"  # Runs every night at 12 AM UTC
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Run Tests
+        run: |
+          docker-compose up -d
+          sleep 10  # Wait for services to start
+          docker exec app pytest tests/
+          docker-compose down
+
+      - name: Build Docker Image
+        if: success()
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest .
+          
+      - name: Push Docker Image to Registry
+        if: success()
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest
+
+      - name: Send Failure Email Notification
+        if: failure()
+        run: |
+          echo "Subject: Nightly Build Failed" > email.txt
+          echo "" >> email.txt
+          echo "The nightly build and test process has failed." >> email.txt
+          echo "Please check the logs for more details." >> email.txt
+          
+          sendemail -f "${{ secrets.SMTP_USER }}" \
+                    -t "recipient@example.com" \
+                    -u "Nightly Build Failure" \
+                    -m "$(cat email.txt)" \
+                    -s "${{ secrets.SMTP_HOST }}:${{ secrets.SMTP_PORT }}" \
+                    -xu "${{ secrets.SMTP_USER }}" \
+                    -xp "${{ secrets.SMTP_PASS }}" \
+                    -o tls=yes
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}

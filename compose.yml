@@ -2,6 +2,7 @@ version: "3.0"
 
 services:
   web:
+    container_name: fastapi-beyond-crud-web
     build: .
     command: uvicorn src.__init__:app --host 0.0.0.0 --port 8000
     volumes:
@@ -30,6 +31,7 @@ services:
       - app-network
 
   db:
+    container_name: fastapi-beyond-crud-db
     image: postgres:15
 
     environment:
@@ -46,6 +48,7 @@ services:
     networks:
       - app-network
   redis:
+    container_name: fastapi-beyond-crud-redis
     image: redis:6
 
     ports:
@@ -55,6 +58,7 @@ services:
      - app-network
 
   celery:
+    container_name: fastapi-beyond-crud-celery
     build: .
 
     command: celery -A src.celery_tasks.c_app worker --loglevel=INFO

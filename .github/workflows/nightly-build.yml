@@ -8,6 +8,21 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          MAIL_PORT: ${{ secrets.MAIL_PORT }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+          MAIL_SERVER: ${{ secrets.MAIL_SERVER }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+          MAIL_FROM_NAME: ${{ secrets.MAIL_FROM_NAME }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          JWT_ALGORITHM: ${{ secrets.JWT_ALGORITHM }}
 
     steps:
       - name: Checkout repository
@@ -19,21 +34,6 @@ jobs:
           sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose --version
-        env:
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASS: ${{ secrets.SMTP_PASS }}
-          MAIL_PORT: ${{ secrets.MAIL_PORT }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
-          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
-          MAIL_SERVER: ${{ secrets.MAIL_SERVER }}
-          MAIL_FROM: ${{ secrets.MAIL_FROM }}
-          MAIL_FROM_NAME: ${{ secrets.MAIL_FROM_NAME }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          JWT_ALGORITHM: ${{ secrets.JWT_ALGORITHM }}
-          REDIS_URL: ${{ secrets.REDIS_URL }}
 
       # Log in to Docker Hub
       - name: Log in to Docker Hub
@@ -50,21 +50,6 @@ jobs:
           docker logs fastapi-beyond-crud-web-1 
           # docker exec fastapi-beyond-crud-web-1 pytest src/tests/
           # docker compose down
-        env:
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASS: ${{ secrets.SMTP_PASS }}
-          MAIL_PORT: ${{ secrets.MAIL_PORT }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          REDIS_URL: ${{ secrets.REDIS_URL }}
-          MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
-          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
-          MAIL_SERVER: ${{ secrets.MAIL_SERVER }}
-          MAIL_FROM: ${{ secrets.MAIL_FROM }}
-          MAIL_FROM_NAME: ${{ secrets.MAIL_FROM_NAME }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          JWT_ALGORITHM: ${{ secrets.JWT_ALGORITHM }}
 
       # Build Docker Image
       - name: Build Docker Image
@@ -100,9 +85,4 @@ jobs:
 
           $(cat email.txt)
           EOF
-        env:
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASS: ${{ secrets.SMTP_PASS }}
-          MAIL_PORT: 587
+  

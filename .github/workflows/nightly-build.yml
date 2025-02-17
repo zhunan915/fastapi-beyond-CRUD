@@ -26,6 +26,13 @@ jobs:
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           MAIL_PORT: ${{ secrets.MAIL_PORT }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+          MAIL_SERVER: ${{ secrets.MAIL_SERVER }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+          MAIL_FROM_NAME: ${{ secrets.MAIL_FROM_NAME }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          JWT_ALGORITHM: ${{ secrets.JWT_ALGORITHM }}
 
       # Log in to Docker Hub
       - name: Log in to Docker Hub

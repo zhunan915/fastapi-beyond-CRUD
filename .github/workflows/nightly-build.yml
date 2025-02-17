@@ -30,6 +30,7 @@ jobs:
           docker compose up -d --build
           sleep 30  # Wait for services to start
           docker ps -a
+          echo $MAIL_PORT
           docker logs fastapi-beyond-crud-web-1 
           # docker exec fastapi-beyond-crud-web-1 pytest src/tests/
           # docker compose down
@@ -73,4 +74,4 @@ jobs:
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
-          MAIL_PORT: ${{ secrets.MAIL_PORT }}
+          MAIL_PORT: 587

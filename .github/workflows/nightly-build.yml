@@ -28,8 +28,9 @@ jobs:
       - name: Run Tests
         run: |
           docker compose up -d --build
-          sleep 10  # Wait for services to start
+          sleep 30  # Wait for services to start
           docker ps -a
+          docker logs fastapi-beyond-crud-web-1 
           # docker exec fastapi-beyond-crud-web-1 pytest src/tests/
           # docker compose down
 

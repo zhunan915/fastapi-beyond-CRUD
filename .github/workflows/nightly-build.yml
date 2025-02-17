@@ -49,6 +49,7 @@ jobs:
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           MAIL_PORT: ${{ secrets.MAIL_PORT }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
 
       # Build Docker Image
       - name: Build Docker Image

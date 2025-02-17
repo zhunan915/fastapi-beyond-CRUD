@@ -44,12 +44,12 @@ jobs:
         run: |
           docker compose up -d --build
           sleep 30  # Wait for services to start
-          docker ps -a
-          echo $MAIL_PORT
-          echo "####"
-          docker logs fastapi-beyond-crud-web-1 
-          # docker exec fastapi-beyond-crud-web-1 pytest src/tests/
-          # docker compose down
+          # docker ps -a
+          # echo $MAIL_PORT
+          # echo "####"
+          # docker logs fastapi-beyond-crud-web-1 
+          docker exec fastapi-beyond-crud-web-1 pytest src/tests/
+          docker compose down
 
       # Build Docker Image
       - name: Build Docker Image

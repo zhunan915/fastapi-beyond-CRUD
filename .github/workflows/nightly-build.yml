@@ -25,6 +25,7 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           MAIL_PORT: ${{ secrets.MAIL_PORT }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       # Log in to Docker Hub
       - name: Log in to Docker Hub

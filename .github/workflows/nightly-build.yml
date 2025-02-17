@@ -24,7 +24,7 @@ jobs:
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
-          MAIL_PORT: 587
+          MAIL_PORT: ${{ secrets.MAIL_PORT }}
 
       # Log in to Docker Hub
       - name: Log in to Docker Hub
@@ -37,9 +37,16 @@ jobs:
           sleep 30  # Wait for services to start
           docker ps -a
           echo $MAIL_PORT
+          echo "####"
           docker logs fastapi-beyond-crud-web-1 
           # docker exec fastapi-beyond-crud-web-1 pytest src/tests/
           # docker compose down
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          MAIL_PORT: ${{ secrets.MAIL_PORT }}
 
       # Build Docker Image
       - name: Build Docker Image

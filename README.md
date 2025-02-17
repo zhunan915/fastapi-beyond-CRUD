@@ -107,3 +107,102 @@ Here is a screenshot showing the PR failure after a bad commit message:
 ![PR Failure Screenshot](./screenshots/bad-commit-message-1.png)
 ![PR Failure Screenshot](./screenshots/bad-commit-message-2.png)
 
+## 🔹 Running the Docker Application 
+### 📌 1. Build and Start the Containers
+1. **Test to Run the following command to build and start the application**:
+
+```bash
+    docker-compose up -d --build
+```
+You should see an output similar to this:
+
+![Docker Compose Screenshot](./screenshots/docker-compose-pic.png)
+
+2. **📌Test to check all running containers:**:
+
+```bash
+    docker ps -a
+```
+You should see an output similar to this:
+
+```bash
+      ~/De/ass7/fastapi-beyond-CRUD on   main !3 ?3 ❯ docker ps  -a                          base at  14:13:30
+        CONTAINER ID   IMAGE                        COMMAND                  CREATED          STATUS          PORTS                    NAMES
+        60c53d48be7d   fastapi-beyond-crud-web      "uvicorn src.__init_…"   21 minutes ago   Up 21 minutes   0.0.0.0:8000->8000/tcp   fastapi-beyond-crud-web-1
+        e18019297317   fastapi-beyond-crud-celery   "celery -A src.celer…"   21 minutes ago   Up 21 minutes   8000/tcp                fastapi-beyond-crud-celery-1
+        9b40edcbc5ec   postgres:15                  "docker-entrypoint.s…"   22 minutes ago   Up 21 minutes   0.0.0.0:5432->5432/tcp   fastapi-beyond-crud-db-1
+        d57efcdfbb6b   redis:6                      "docker-entrypoint.s…"   22 minutes ago   Up 21 minutes   0.0.0.0:6379->6379/tcp   fastapi-beyond-crud-redis-1
+```
+
+2. **📌Test to check Logs to Verify the Application is Running:**:
+
+```bash
+    docker logs fastapi-beyond-crud-web-1
+```
+
+Check logs for the FastAPI Web Service and You should see an output similar to this:
+
+```bash
+      ~/Desktop/ass7/fastapi-beyond-CRUD on   main !3 ?4 ❯ docker logs fastapi-beyond-crud-web-1                                        base at  14:25:31
+        INFO:     Started server process [1]
+        INFO:     Waiting for application startup.
+        INFO:     Application startup complete.
+        INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)1
+```
+
+```bash
+    docker logs fastapi-beyond-crud-celery-1
+```
+
+Check logs for Celery Worker: and You should see an output similar to this:
+
+```bash
+      ~/Desktop/ass7/fastapi-beyond-CRUD on   main !3 ?4 ❯ docker logs fastapi-beyond-crud-celery-1                                                            base at  14:29:11
+/usr/local/lib/python3.11/site-packages/celery/platforms.py:829: SecurityWarning: You're running the worker with superuser privileges: this is
+absolutely not recommended!
+
+Please specify a different user using the --uid option.
+
+User information: uid=0 euid=0 gid=0 egid=0
+
+  warnings.warn(SecurityWarning(ROOT_DISCOURAGED.format(
+ 
+ -------------- celery@e18019297317 v5.4.0 (opalescent)
+--- ***** ----- 
+-- ******* ---- Linux-5.15.49-linuxkit-pr-x86_64-with-glibc2.36 2025-02-17 06:04:11
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         __main__:0x7fafb8f0a2d0
+- ** ---------- .> transport:   redis://redis:6379/0
+- ** ---------- .> results:     redis://redis:6379/0
+- *** --- * --- .> concurrency: 4 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> celery           exchange=celery(direct) key=celery
+                
+
+[tasks]
+  . src.celery_tasks.send_email
+
+[2025-02-17 06:04:12,627: INFO/MainProcess] Connected to redis://redis:6379/0
+[2025-02-17 06:04:12,634: INFO/MainProcess] mingle: searching for neighbors
+[2025-02-17 06:04:13,657: INFO/MainProcess] mingle: all alone
+[2025-02-17 06:04:13,692: INFO/MainProcess] celery@e18019297317 ready.
+```
+
+3. **📌Test to Open API Documentation in Browser:**:
+
+Once the application is running, open your browser and go to:
+
+```bash
+    http://localhost:8000/api/v1/docs
+```
+
+You should see all API endpoints listed as expected in below scrrenshots.
+
+
+![PR Failure Screenshot](./screenshots/api-1.png)
+![PR Failure Screenshot](./screenshots/api-2.png)
+
+

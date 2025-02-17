@@ -1,80 +1,78 @@
-# FastAPI Beyond CRUD 
+# 🚀 FastAPI Beyond CRUD - Conventional Commits & Semantic Versioning (SemVer) Validation  
 
-This is the source code for the [FastAPI Beyond CRUD](https://youtube.com/playlist?list=PLEt8Tae2spYnHy378vMlPH--87cfeh33P&si=rl-08ktaRjcm2aIQ) course. The course focuses on FastAPI development concepts that go beyond the basic CRUD operations.
+This repository includes a **GitHub Actions Workflow** that enforces **Conventional Commits** and **Semantic Versioning (SemVer)** for all **Pull Requests (PRs).**  
 
-For more details, visit the project's [website](https://jod35.github.io/fastapi-beyond-crud-docs/site/).
+For more details on FastAPI Beyond CRUD, visit the project's [website](https://jod35.github.io/fastapi-beyond-crud-docs/site/).
 
-## Table of Contents
+---
 
-1. [Getting Started](#getting-started)
-2. [Prerequisites](#prerequisites)
-3. [Project Setup](#project-setup)
-4. [Running the Application](#running-the-application)
-5. [Running Tests](#running-tests)
-6. [Contributing](#contributing)
+## 📌 Table of Contents
 
-## Getting Started
-Follow the instructions below to set up and run your FastAPI project.
+1. [Overview](#overview)  
+2. [Features](#features)  
+3. [Setup Instructions](#setup-instructions)  
+4. [Testing Conventional Commit Validations](#testing-conventional-commit-validations)  
+   - [Testing Bad PR Title](#1-testing-bad-pr-title)  
+   - [Testing Bad Commit Message](#2-testing-bad-commit-message)  
+   - [Testing Bad Commit Body](#3-testing-bad-commit-body)  
+5. [Testing Nightly Build & Docker Deployment](#testing-nightly-build--docker-deployment)  
+6. [Screenshots](#screenshots)  
+7. [Next Steps](#next-steps)  
 
-### Prerequisites
-Ensure you have the following installed:
+---
 
-- Python >= 3.10
-- PostgreSQL
-- Redis
+## 📌 Overview
 
-### Project Setup
-1. Clone the project repository:
-    ```bash
-    git clone https://github.com/jod35/fastapi-beyond-CRUD.git
-    ```
-   
-2. Navigate to the project directory:
-    ```bash
-    cd fastapi-beyond-CRUD/
-    ```
+This project ensures that all pull requests comply with **Conventional Commits** and **Semantic Versioning (SemVer)** using **GitHub Actions**.  
 
-3. Create and activate a virtual environment:
-    ```bash
-    python3 -m venv env
-    source env/bin/activate
-    ```
+It includes:  
+✅ PR Title Validation  
+✅ Commit Message Validation  
+✅ PR Auto-Closure if validation fails  
+✅ Email Notification on failure  
+✅ Nightly Build & Docker Deployment  
 
-4. Install the required dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
+---
 
-5. Set up environment variables by copying the example configuration:
-    ```bash
+## 🔹 Features
+
+- **PR Title Validation**: Ensures PR titles follow the **Conventional Commit** format.
+- **Commit Message Validation**: Every commit in a PR must adhere to **Conventional Commit & SemVer**.
+- **PR Auto-Closure**: If a PR fails the validation, it is **automatically closed**.
+- **Email Notification**: An email is sent to notify the user when a PR fails the validation.
+- **Nightly Build**: Runs tests and builds the Docker image at **12 AM UTC**. If tests fail, the image is not pushed.
+
+---
+
+## 🔹 Setup Instructions  
+
+### 1️⃣ **Move Required GitHub Secrets to .env**  
+
+To prevent exposing credentials, simply run
+```sh
     cp .env.example .env
-    ```
-
-6. Run database migrations to initialize the database schema:
-    ```bash
-    alembic upgrade head
-    ```
-
-7. Open a new terminal and ensure your virtual environment is active. Start the Celery worker (Linux/Unix shell):
-    ```bash
-    sh runworker.sh
-    ```
-
-## Running the Application
-Start the application:
-
-```bash
-fastapi dev src/
-```
-Alternatively, you can run the application using Docker:
-```bash
-docker compose up -d
-```
-## Running Tests
-Run the tests using this command
-```bash
-pytest
 ```
 
-## Contributing
-I welcome contributions to improve the documentation! You can contribute [here](https://github.com/jod35/fastapi-beyond-crud-docs).
+
+---
+
+## 🔹 Testing Conventional Commit Validations  
+
+### 📌 **1. Testing Bad PR Title**  
+
+1. **Make a commit**:
+```sh
+   echo "Testing PR Title Validation" > test.txt
+   git add test.txt
+   git commit -m "feat: add login functionality"
+   git push origin test-bad-pr-title
+```
+Here is a screenshot showing the PR failure after a bad PR title:
+
+![PR Failure Screenshot](./screenshots/test-bad-pr-title.png)
+![PR Failure Screenshot](./screenshots/test-bad-pr-title-2.png)
+![PR Failure Screenshot](./screenshots/test-bad-pr-title3.jpg)
+![PR Failure Screenshot](./screenshots/bad-title4.jpg)
+
+
+

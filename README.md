@@ -61,6 +61,8 @@ To prevent exposing credentials, simply run
 
 ## 🔹 Testing Conventional Commit Validations  
 
+---
+
 ### 📌 **1. Testing Bad PR Title**  
 
 1. **Make a commit**:
@@ -110,6 +112,9 @@ Here is a screenshot showing the PR failure after a bad commit message:
 ---
 
 ## 🔹 Running the Docker Application 
+
+---
+
 ### 📌 1. Build and Start the Containers
 1. **Test to Run the following command to build and start the application**:
 
@@ -119,6 +124,8 @@ Here is a screenshot showing the PR failure after a bad commit message:
 You should see an output similar to this:
 
 ![Docker Compose Screenshot](./screenshots/docker-compose-pic.png)
+
+---
 
 2. **📌Test to check all running containers:**:
 
@@ -135,6 +142,7 @@ You should see an output similar to this:
         9b40edcbc5ec   postgres:15                  "docker-entrypoint.s…"   22 minutes ago   Up 21 minutes   0.0.0.0:5432->5432/tcp   fastapi-beyond-crud-db-1
         d57efcdfbb6b   redis:6                      "docker-entrypoint.s…"   22 minutes ago   Up 21 minutes   0.0.0.0:6379->6379/tcp   fastapi-beyond-crud-redis-1
 ```
+---
 
 2. **📌Test to check Logs to Verify the Application is Running:**:
 
@@ -193,6 +201,8 @@ User information: uid=0 euid=0 gid=0 egid=0
 [2025-02-17 06:04:13,692: INFO/MainProcess] celery@e18019297317 ready.
 ```
 
+---
+
 3. **📌Test to Open API Documentation in Browser:**:
 
 Once the application is running, open your browser and go to:
@@ -212,6 +222,7 @@ You should see all API endpoints listed as expected in below scrrenshots.
 
 ## 🔹 Testing Nightly Build & Push to DockerHub
 
+---
 ### 📌 **1. Testing Nightly Build Success**  
 
 This Nightly Build will **send email notification** and image **cannot be stored in to Docker Hub registry** if test cases fails, and will only do so when all tests passed. 
@@ -219,13 +230,15 @@ This Nightly Build will **send email notification** and image **cannot be stored
 This Nightly Build includes:  
 ✅ Set up jobs & checkout repositories 
 ✅ Set up Docker Compose  
-✅ Log in to Docker Hub
+✅ Log in to Docker Hub  
 ✅ Docker Compose Up and Run Tests  
-✅ Build Docker Image
-✅ Push Docker Image to Registry
-✅ Install msmtp for email notifications
-✅ Send Failure Email Notification
-✅ Post Clean Up
+✅ Build Docker Image  
+✅ Push Docker Image to Registry  
+✅ Install msmtp for email notifications  
+✅ Send Failure Email Notification  
+✅ Post Clean Up  
+
+---
 
 Testing Nightly Build on local, and this will trigger Nightly Build on Github Actions and you can track build status on Actions tab, simply run on local terminal:
 
@@ -233,17 +246,23 @@ Testing Nightly Build on local, and this will trigger Nightly Build on Github Ac
     gh workflow run nightly-build.yml  
 ```
 
+---
+
 ### 📌 **1. Set up jobs & checkout repositories**  
 
 Here is a setting up the jobs pipeline and checkout the git repo
 
 ![Screenshot](./screenshots/startjobs.png)
 
+---
+
 ### 📌 **2. Set up Docker Compose**  
 
 Here is a setting up and install docker compose make sure all software is available
 
-![Screenshot](./setupdockercompose.png)
+![Screenshot](./screenshots/setupdockercompose.png)
+
+---
 
 ### 📌 **3. Log in to Docker Hub**  
 
@@ -251,11 +270,15 @@ Here is a login to DockerHub
 
 ![Screenshot](./screenshots/dockerlogin.png)
 
+---
+
 ### 📌 **4. Docker Compose Up and Run Tests**  
 
 Here is a running docker compose up build all container image and run the tests
 
 ![Screenshot](./screenshots/runtest.png)
+
+---
 
 ### 📌 **5. Build Docker Image**  
 
@@ -264,7 +287,11 @@ Here is to build docker image
 
 ### 📌 **6. Push Docker Image to Registry**  
 
+---
+
 Here is push just built docker image to docker hub if tests all pass, and also shown Docker Hub page after image is pushed to registry.
 
 ![Screenshot](./screenshots/pushdockerimage.png)
 ![Screenshot](./screenshots/dockerimagepushed.png)
+
+---

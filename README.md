@@ -303,3 +303,91 @@ In below screenshot, One build is **Trigger Manually** and one is **Schedules** 
 ![Screenshot](./screenshots/schedule.png)
 
 ---
+
+## 📌 **2. Testing Nightly Build Fail**  
+
+This Nightly Build will **send email notification** and image **cannot be stored in to Docker Hub registry** if test cases fails.
+
+Changed `test_book.py` to make test fail, tested locally with below command:
+
+```bash
+    docker exec fastapi-beyond-crud-web-1 pytest src/tests/   
+```
+
+We should be able to see below tests failing:
+
+```bash
+      ~/De/ass7/fastapi-beyond-CRUD on   main !1 ?3 ❯ docker exec fastapi-beyond-crud-web-1 pytest src/tests/
+============================= test session starts ==============================
+platform linux -- Python 3.11.11, pytest-7.2.2, pluggy-1.5.0
+rootdir: /app
+plugins: anyio-4.4.0
+collected 5 items
+
+src/tests/test_auth.py .                                                 [ 20%]
+src/tests/test_book.py EEEE                                              [100%]
+
+==================================== ERRORS ====================================
+_____________________ ERROR at setup of test_get_all_books _____________________
+file /app/src/tests/test_book.py, line 80
+  def test_get_all_books(test_client, fake_book_service, fake_session):
+file /app/src/tests/test_book.py, line 60
+  @pytest.fixture
+  def fake_book_service(mocker):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, doctest_namespace, fake_book_service, fake_session, fake_user_service, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, test_book, test_client, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/app/src/tests/test_book.py:60
+______________________ ERROR at setup of test_create_book ______________________
+file /app/src/tests/test_book.py, line 89
+  def test_create_book(test_client, fake_book_service, fake_session):
+file /app/src/tests/test_book.py, line 60
+  @pytest.fixture
+  def fake_book_service(mocker):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, doctest_namespace, fake_book_service, fake_session, fake_user_service, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, test_book, test_client, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/app/src/tests/test_book.py:60
+____________________ ERROR at setup of test_get_book_by_uid ____________________
+file /app/src/tests/test_book.py, line 108
+  def test_get_book_by_uid(test_client, fake_book_service, test_book, fake_session):
+file /app/src/tests/test_book.py, line 60
+  @pytest.fixture
+  def fake_book_service(mocker):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, doctest_namespace, fake_book_service, fake_session, fake_user_service, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, test_book, test_client, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/app/src/tests/test_book.py:60
+__________________ ERROR at setup of test_update_book_by_uid ___________________
+file /app/src/tests/test_book.py, line 115
+  def test_update_book_by_uid(test_client, fake_book_service, test_book, fake_session):
+file /app/src/tests/test_book.py, line 60
+  @pytest.fixture
+  def fake_book_service(mocker):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, doctest_namespace, fake_book_service, fake_session, fake_user_service, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, test_book, test_client, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/app/src/tests/test_book.py:60
+=============================== warnings summary ===============================
+../usr/local/lib/python3.11/site-packages/passlib/utils/__init__.py:854
+  /usr/local/lib/python3.11/site-packages/passlib/utils/__init__.py:854: DeprecationWarning: 'crypt' is deprecated and slated for removal in Python 3.13
+    from crypt import crypt as _crypt
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR src/tests/test_book.py::test_get_all_books
+ERROR src/tests/test_book.py::test_create_book
+ERROR src/tests/test_book.py::test_get_book_by_uid
+ERROR src/tests/test_book.py::test_update_book_by_uid
+==================== 1 passed, 1 warning, 4 errors in 0.12s ====================
+```
+
+---
+
+### 📌 **3. Testing Nightly Build Fail Github Actions and Email Notification**  
+
+In this section we will test it on Github Action, when the test cases failes, the Github Actions Nightly Build should fail and this iamge should not be pushed to Docker Hub and a failing email notification should be sent. 

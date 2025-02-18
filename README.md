@@ -400,3 +400,16 @@ Next I will manually trigger Nightly Build again with below command:
 
 Then we can go to Github Actions to check pipeline status:
 
+
+we see **Docker Compose Up and Run Tests** with 4 test cases failed. So, it triggered **Failure Email Notification**
+
+![Screenshot](./screenshots/testfail-1.png)
+![Screenshot](./screenshots/nightlybuildfailemail.png)
+
+---
+
+Next we received a **GitHub Action Build email notification** indicating failture of **Nightly Build**
+
+![Screenshot](./screenshots/nightlyfailemail.png)
+
+

@@ -228,7 +228,7 @@ You should see all API endpoints listed as expected in below scrrenshots.
 This Nightly Build will **send email notification** and image **cannot be stored in to Docker Hub registry** if test cases fails, and will only do so when all tests passed. 
 
 This Nightly Build includes:  
-✅ Set up jobs & checkout repositories 
+✅ Set up jobs & checkout repositories  
 ✅ Set up Docker Compose  
 ✅ Log in to Docker Hub  
 ✅ Docker Compose Up and Run Tests  
@@ -240,7 +240,7 @@ This Nightly Build includes:
 
 ---
 
-Testing Nightly Build on local, and this will trigger Nightly Build on Github Actions and you can track build status on Actions tab, simply run on local terminal:
+Testing Nightly Build on local manually, and this will trigger Nightly Build on Github Actions and you can track build status on Actions tab, simply run on local terminal:
 
 ```bash
     gh workflow run nightly-build.yml  
@@ -293,5 +293,13 @@ Here is push just built docker image to docker hub if tests all pass, and also s
 
 ![Screenshot](./screenshots/pushdockerimage.png)
 ![Screenshot](./screenshots/dockerimagepushed.png)
+
+---
+
+Now checking if **Nightly Build** actually runs **every night at 12 AM UTC on schedule**:
+
+In below screenshot, One build is **Trigger Manually** and one is **Schedules** which means **Nightly Build** is working as expected. 
+
+![Screenshot](./screenshots/schedule.png)
 
 ---

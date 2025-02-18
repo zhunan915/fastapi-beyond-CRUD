@@ -93,6 +93,8 @@ jobs:
           echo "from ${{ secrets.MAIL_FROM }}" >> ~/.msmtprc
           echo "logfile ~/.msmtp.log" >> ~/.msmtprc
 
+          chmod 600 ~/.msmtprc
+
           # Debugging: Verify that the file was created and is not empty
           cat ~/.msmtprc
           

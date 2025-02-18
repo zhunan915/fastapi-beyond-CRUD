@@ -107,6 +107,8 @@ Here is a screenshot showing the PR failure after a bad commit message:
 ![PR Failure Screenshot](./screenshots/bad-commit-message-1.png)
 ![PR Failure Screenshot](./screenshots/bad-commit-message-2.png)
 
+---
+
 ## 🔹 Running the Docker Application 
 ### 📌 1. Build and Start the Containers
 1. **Test to Run the following command to build and start the application**:
@@ -206,3 +208,63 @@ You should see all API endpoints listed as expected in below scrrenshots.
 ![PR Failure Screenshot](./screenshots/api-2.png)
 
 
+---
+
+## 🔹 Testing Nightly Build & Push to DockerHub
+
+### 📌 **1. Testing Nightly Build Success**  
+
+This Nightly Build will **send email notification** and image **cannot be stored in to Docker Hub registry** if test cases fails, and will only do so when all tests passed. 
+
+This Nightly Build includes:  
+✅ Set up jobs & checkout repositories 
+✅ Set up Docker Compose  
+✅ Log in to Docker Hub
+✅ Docker Compose Up and Run Tests  
+✅ Build Docker Image
+✅ Push Docker Image to Registry
+✅ Install msmtp for email notifications
+✅ Send Failure Email Notification
+✅ Post Clean Up
+
+Testing Nightly Build on local, and this will trigger Nightly Build on Github Actions and you can track build status on Actions tab, simply run on local terminal:
+
+```bash
+    gh workflow run nightly-build.yml  
+```
+
+### 📌 **1. Set up jobs & checkout repositories**  
+
+Here is a setting up the jobs pipeline and checkout the git repo
+
+![Screenshot](./screenshots/startjobs.png)
+
+### 📌 **2. Set up Docker Compose**  
+
+Here is a setting up and install docker compose make sure all software is available
+
+![Screenshot](./setupdockercompose.png)
+
+### 📌 **3. Log in to Docker Hub**  
+
+Here is a login to DockerHub
+
+![Screenshot](./screenshots/dockerlogin.png)
+
+### 📌 **4. Docker Compose Up and Run Tests**  
+
+Here is a running docker compose up build all container image and run the tests
+
+![Screenshot](./screenshots/runtest.png)
+
+### 📌 **5. Build Docker Image**  
+
+Here is to build docker image
+![Screenshot](./screenshots/builddockerimage.png)
+
+### 📌 **6. Push Docker Image to Registry**  
+
+Here is push just built docker image to docker hub if tests all pass, and also shown Docker Hub page after image is pushed to registry.
+
+![Screenshot](./screenshots/pushdockerimage.png)
+![Screenshot](./screenshots/dockerimagepushed.png)

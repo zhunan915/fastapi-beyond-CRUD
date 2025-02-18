@@ -392,7 +392,7 @@ ERROR src/tests/test_book.py::test_update_book_by_uid
 
 In this section we will test it on Github Action, when the test cases failes, the Github Actions Nightly Build should fail and this iamge should not be pushed to Docker Hub and a failing email notification should be sent. 
 
-Next I will manually trigger Nightly Build again with below command:
+📌 Next I will manually trigger Nightly Build again with below command:
 
 ```bash
     gh workflow run nightly-build.yml  
@@ -401,14 +401,14 @@ Next I will manually trigger Nightly Build again with below command:
 Then we can go to Github Actions to check pipeline status:
 
 
-we see **Docker Compose Up and Run Tests** with 4 test cases failed. So, it triggered **Failure Email Notification**
+📌 we see **Docker Compose Up and Run Tests** with 4 test cases failed. So, it triggered **Failure Email Notification**
 
 ![Screenshot](./screenshots/testfail-1.png)
 ![Screenshot](./screenshots/nightlybuildfailemail.png)
 
 ---
 
-Next we received a **GitHub Action Build email notification** indicating failture of **Nightly Build**
+📌 Next we received a **GitHub Action Build email notification** indicating failture of **Nightly Build**
 
 ![Screenshot](./screenshots/nightlyfailemail.jpg)
 

@@ -410,6 +410,6 @@ we see **Docker Compose Up and Run Tests** with 4 test cases failed. So, it trig
 
 Next we received a **GitHub Action Build email notification** indicating failture of **Nightly Build**
 
-![Screenshot](./screenshots/nightlyfailemail.png)
+![Screenshot](./screenshots/nightlyfailemail.jpg)
 
 

@@ -391,3 +391,12 @@ ERROR src/tests/test_book.py::test_update_book_by_uid
 ### 📌 **3. Testing Nightly Build Fail Github Actions and Email Notification**  
 
 In this section we will test it on Github Action, when the test cases failes, the Github Actions Nightly Build should fail and this iamge should not be pushed to Docker Hub and a failing email notification should be sent. 
+
+Next I will manually trigger Nightly Build again with below command:
+
+```bash
+    gh workflow run nightly-build.yml  
+```
+
+Then we can go to Github Actions to check pipeline status:
+

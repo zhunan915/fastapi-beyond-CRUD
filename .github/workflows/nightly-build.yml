@@ -81,6 +81,21 @@ jobs:
       - name: Send Failure Email Notification
         if: failure()
         run: |
+          echo "defaults" > ~/.msmtprc
+          echo "auth on" >> ~/.msmtprc
+          echo "tls on" >> ~/.msmtprc
+          echo "tls_certcheck off" >> ~/.msmtprc
+          echo "account default" >> ~/.msmtprc
+          echo "host ${{ secrets.MAIL_SERVER }}" >> ~/.msmtprc
+          echo "port ${{ secrets.MAIL_PORT }}" >> ~/.msmtprc
+          echo "user ${{ secrets.MAIL_USERNAME }}" >> ~/.msmtprc
+          echo "password ${{ secrets.MAIL_PASSWORD }}" >> ~/.msmtprc
+          echo "from ${{ secrets.MAIL_FROM }}" >> ~/.msmtprc
+          echo "logfile ~/.msmtp.log" >> ~/.msmtprc
+
+          # Debugging: Verify that the file was created and is not empty
+          cat ~/.msmtprc
+          
           echo "Subject: Nightly Build Failed" > email.txt
           echo "" >> email.txt
           echo "The nightly build and test process has failed." >> email.txt

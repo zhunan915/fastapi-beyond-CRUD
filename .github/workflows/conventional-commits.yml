@@ -53,6 +53,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install sendemail
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sendemail
+
       - name: Send Failure Email Notification
         if: failure()
         run: |

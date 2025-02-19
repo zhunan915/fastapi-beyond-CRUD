@@ -56,6 +56,15 @@ To prevent exposing credentials, simply run
     cp .env.example .env
 ```
 
+Run below commands to simply start the application in docker container and running all images:
+```bash
+    docker compose up
+```
+or 
+```bash
+    docker compose up -d --build
+```
+
 
 ---
 

@@ -75,7 +75,7 @@ To prevent exposing credentials, simply run
 Here is a screenshot showing the PR failure after a bad PR title:
 
 ![PR Failure Screenshot](./screenshots/test-bad-pr-title.png)
-![PR Failure Screenshot](./screenshots/bad-pr-title-2.png)
+![PR Failure Screenshot](./screenshots/pr-title-fail.png)
 ![PR Failure Screenshot](./screenshots/bad-pr-title-3.jpg)
 ![PR Failure Screenshot](./screenshots/bad-title-4.jpg)
 
